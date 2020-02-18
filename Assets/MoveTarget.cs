@@ -13,6 +13,7 @@ public class MoveTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
         if (Input.GetKey(KeyCode.Mouse0))
         {
             RaycastHit hit;

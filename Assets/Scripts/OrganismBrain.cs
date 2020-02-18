@@ -17,7 +17,7 @@ public class OrganismBrain : MonoBehaviour
     bool hungerTick;
     bool healthTick;
     bool ageTick;
-
+    public bool defaultMovement = true;
     float clock = 0;
     public int seconds;
 
@@ -35,6 +35,7 @@ public class OrganismBrain : MonoBehaviour
         //set movespeed to rand range
         movespeed = Random.Range(0.4f, 0.9f);
         age = Random.Range(0, 25);
+        defaultMovement = true;
     }
 
     private void Update()
@@ -75,32 +76,40 @@ public class OrganismBrain : MonoBehaviour
     void FixedUpdate()
     {
         //aging
-        
-       // health -= Time.deltaTime / 2;
+
+        // health -= Time.deltaTime / 2;
         //transform.localScale = new Vector3(health / 100, health / 100, health / 100);
 
 
         //movement
-        if (!hungry)
+        if (defaultMovement)
         {
-            move(target);
-        }
-        else
-        {
-            if (food != null)
+            if (!hungry)
             {
-                move(food);
+                move(target, transform.forward);
             }
-            if (food == null)
+            else
             {
-                move(target);
+                if (food != null)
+                {
+                    move(food, transform.forward);
+                }
+                if (food == null)
+                {
+                    move(target, transform.forward);
+                }
             }
         }
     }
-    void move(Transform targetPos)
+    public void move(Transform targetPos, Vector3 direction)
     {
         transform.LookAt(targetPos);
-        rb.velocity = rb.transform.forward * movespeed;
+        rb.velocity = direction * movespeed;
+    }
+    public void move2(Transform position, Vector3 direction)
+    {
+        transform.LookAt(position);
+        rb.velocity = direction * movespeed;
     }
     public Transform findNearestFood()
     {
@@ -156,7 +165,10 @@ public class OrganismBrain : MonoBehaviour
         else
             healthTick = false;
     }
-   
+    public void AddDamage()
+    {
+        Debug.Log("test");
+    }
     private void OnCollisionStay(Collision collision)
     {
         if(collision.transform.tag == "food" && hungry)
