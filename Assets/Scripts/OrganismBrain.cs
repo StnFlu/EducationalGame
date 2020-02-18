@@ -106,8 +106,9 @@ public class OrganismBrain : MonoBehaviour
         transform.LookAt(targetPos);
         rb.velocity = direction * movespeed;
     }
-    public void move2(Transform position, Vector3 direction)
+    public void move2(Vector3 position, Vector3 direction)
     {
+
         transform.LookAt(position);
         rb.velocity = direction * movespeed;
     }
