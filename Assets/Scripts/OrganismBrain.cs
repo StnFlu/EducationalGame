@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class OrganismBrain : MonoBehaviour
 {
+    public NavMeshAgent player;
+
     public int age;
 
     public int health;
@@ -31,13 +34,22 @@ public class OrganismBrain : MonoBehaviour
 
     void Start()
     {
+        player.Warp(transform.position);
+
+
+        target = FindObjectOfType<MoveTarget>().transform;
         gm = FindObjectOfType<GameManager>();
         //set movespeed to rand range
         movespeed = Random.Range(0.4f, 0.9f);
         age = Random.Range(0, 25);
         defaultMovement = true;
+        player.speed = movespeed;
     }
-
+   
+    public void move(Vector3 pos)
+    {
+        player.SetDestination(pos);
+    }
     private void Update()
     {
         //statmanagement
@@ -73,44 +85,22 @@ public class OrganismBrain : MonoBehaviour
 
     }
     // Update is called once per frame
+
     void FixedUpdate()
     {
-        //aging
-
-        // health -= Time.deltaTime / 2;
-        //transform.localScale = new Vector3(health / 100, health / 100, health / 100);
-
-
-        //movement
-        if (defaultMovement)
+        if (!hungry)
         {
-            if (!hungry)
+            move(target.position);
+        }
+        else
+        {
+            if (food != null)
             {
-                move(target, transform.forward);
+                move(food.position);
             }
             else
-            {
-                if (food != null)
-                {
-                    move(food, transform.forward);
-                }
-                if (food == null)
-                {
-                    move(target, transform.forward);
-                }
-            }
+                move(target.position);
         }
-    }
-    public void move(Transform targetPos, Vector3 direction)
-    {
-        transform.LookAt(targetPos);
-        rb.velocity = direction * movespeed;
-    }
-    public void move2(Vector3 position, Vector3 direction)
-    {
-
-        transform.LookAt(position);
-        rb.velocity = direction * movespeed;
     }
     public Transform findNearestFood()
     {
@@ -170,6 +160,7 @@ public class OrganismBrain : MonoBehaviour
     {
         Debug.Log("test");
     }
+
     private void OnCollisionStay(Collision collision)
     {
         if(collision.transform.tag == "food" && hungry)

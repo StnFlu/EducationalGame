@@ -14,8 +14,13 @@ public class navMesh : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        player.SetDestination(target.position);
+        move(target.position);
+    }
+
+    public void move(Vector3 pos)
+    {
+        player.SetDestination(pos);
     }
 }

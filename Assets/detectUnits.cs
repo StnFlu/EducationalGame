@@ -30,9 +30,6 @@ public class detectUnits : MonoBehaviour
     void Update()
     {
         RaycastHit hit;
-        RaycastHit hit2;
-        RaycastHit hit3;
-        RaycastHit hit4;
         if (Physics.Raycast(one.position, transform.TransformDirection(Vector3.forward), out hit, dist) || Physics.Raycast(two.position, transform.TransformDirection(Vector3.forward), out hit, dist) || Physics.Raycast(three.position, transform.TransformDirection(Vector3.forward), out hit, dist))
         {
             OB.defaultMovement = false;
@@ -58,7 +55,7 @@ public class detectUnits : MonoBehaviour
                     //OB.move2(hit.point, Vector3.back);
                     return;
                 case 0:
-                    OB.move(OB.target, Vector3.left);
+                  
                     return;
             }
         }

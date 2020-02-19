@@ -5,24 +5,31 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<Transform> Food;
-
+    public GameObject organisms;
+    
     // Start is called before the first frame update
     void Start()
     {
+        spawnOrganisms();
         Time.timeScale = 1f;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey(KeyCode.O))
-            Time.timeScale = 5f;
-        if (Input.GetKey(KeyCode.P))
-            Time.timeScale = 1f;
+
     }
     public void addFood(GameObject x)
     {
         Food.Add(x.transform);
+    }
+    void spawnOrganisms()
+    {
+        int number = Random.Range(10, 25);
+        for (int i = 0 ; i < number; i++)
+        {
+            Instantiate(organisms, new Vector3(2, 0, 2), transform.rotation, GameObject.Find("Organisms").transform);
+        }
     }
     public void removeFood(GameObject x)
     {
