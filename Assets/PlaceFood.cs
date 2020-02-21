@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTarget : MonoBehaviour
+public class PlaceFood : MonoBehaviour
 {
     Controller ct;
-    public Transform target;
-
+    public GameObject food;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,21 +15,22 @@ public class MoveTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ct.CurrentTool == gameObject.GetComponent<MoveTarget>())
+        
+        if (ct.CurrentTool == gameObject.GetComponent<PlaceFood>())
         {
-            Debug.Log("test");
-
+            Debug.Log("test Food");
             if (Input.GetKey(KeyCode.Mouse0))
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit))
                 {
-
-                    target.position = hit.point;
+                    if (hit.collider.tag == "petri")
+                    {
+                        Instantiate(food, hit.point, hit.transform.rotation);
+                    }
                 }
             }
-        }  
+        }
     }
-
 }

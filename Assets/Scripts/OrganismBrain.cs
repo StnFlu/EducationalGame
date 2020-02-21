@@ -37,7 +37,7 @@ public class OrganismBrain : MonoBehaviour
         player.Warp(transform.position);
 
 
-        target = FindObjectOfType<MoveTarget>().transform;
+        target = GameObject.Find("Target").transform;
         gm = FindObjectOfType<GameManager>();
         //set movespeed to rand range
         movespeed = Random.Range(0.4f, 0.9f);

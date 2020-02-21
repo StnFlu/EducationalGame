@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveTarget : MonoBehaviour
+public class PlaceObstacles : MonoBehaviour
 {
     Controller ct;
-    public Transform target;
-
+    public GameObject[] obstacles;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,21 +15,21 @@ public class MoveTarget : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ct.CurrentTool == gameObject.GetComponent<MoveTarget>())
-        {
-            Debug.Log("test");
 
+        if (ct.CurrentTool == gameObject.GetComponent<PlaceObstacles>())
+        {
             if (Input.GetKey(KeyCode.Mouse0))
             {
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit))
                 {
-
-                    target.position = hit.point;
+                    if (hit.collider.tag == "petri")
+                    {
+                        Instantiate(obstacles[Random.Range(0,obstacles.Length)], hit.point, hit.transform.rotation);
+                    }
                 }
             }
-        }  
+        }
     }
-
 }
