@@ -41,7 +41,7 @@ public class OrganismBrain : MonoBehaviour
         gm = FindObjectOfType<GameManager>();
         //set movespeed to rand range
         movespeed = Random.Range(0.4f, 0.9f);
-        age = Random.Range(0, 25);
+        age = Random.Range(0, 12);
         defaultMovement = true;
         player.speed = movespeed;
     }
@@ -127,11 +127,29 @@ public class OrganismBrain : MonoBehaviour
         if (seconds % 12 == 0)
         {
             if (!ageTick)
+            {
                 age = increment(age, 1);
-            ageTick = true;
+                Growth(age);
+            }
+                ageTick = true;
         }
         else
             ageTick = false;
+    }
+    void Growth(int age)
+    {
+        if(age< 18)
+        {
+            transform.localScale = transform.localScale * 1.1f;
+        }
+        else if(age > 18 && age < 30)
+        {
+
+        }
+        else
+        {
+            transform.localScale = transform.localScale * 0.95f;
+        }
     }
     void gethungry()
     {

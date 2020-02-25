@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    public int CurrentPlayer;
     public List<Transform> Food;
+    public List<GameObject> Organisms;
     public GameObject organisms;
     public GameObject food;
-
+    public GameObject sprite;
     public Texture2D cursorTexture;
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         spawnOrganisms();
+        CurrentPlayer = selectPlayer();
+        Instantiate(sprite, Organisms[CurrentPlayer].transform.position, Organisms[CurrentPlayer].transform.rotation, Organisms[CurrentPlayer].transform);
         Time.timeScale = 1f;
         spawnFood(10, food);
     }
@@ -23,6 +27,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
         Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
     }
     public void addFood(GameObject x)
@@ -31,10 +36,11 @@ public class GameManager : MonoBehaviour
     }
     void spawnOrganisms()
     {
-        int number = Random.Range(100, 250);
+        int number = Random.Range(10, 25);
         for (int i = 0 ; i < number; i++)
         {
-            Instantiate(organisms, new Vector3(2, 0, 2), transform.rotation, GameObject.Find("Organisms").transform);
+            GameObject creatures = (GameObject)Instantiate(organisms, new Vector3(2, 0, 2), transform.rotation, GameObject.Find("Organisms").transform);
+            Organisms.Add(creatures);
         }
     }
     public void removeFood(GameObject x)
@@ -69,5 +75,11 @@ public class GameManager : MonoBehaviour
             Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
             Instantiate(prefab, pos, rot);
         }
+    }
+    int selectPlayer()
+    {
+        int player = Random.Range(0, Organisms.Count);
+        return player;
+            
     }
 }

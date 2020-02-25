@@ -18,7 +18,6 @@ public class MoveTarget : MonoBehaviour
     {
         if (ct.CurrentTool == gameObject.GetComponent<MoveTarget>())
         {
-            Debug.Log("test");
 
             if (Input.GetKey(KeyCode.Mouse0))
             {

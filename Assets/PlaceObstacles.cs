@@ -5,7 +5,11 @@ using UnityEngine;
 public class PlaceObstacles : MonoBehaviour
 {
     Controller ct;
+    [SerializeField]
+    private int maxObstacles;
+
     public GameObject[] obstacles;
+    private List<GameObject> totalPlaced = new List<GameObject>();
     // Start is called before the first frame update
     void Start()
     {
@@ -26,10 +30,21 @@ public class PlaceObstacles : MonoBehaviour
                 {
                     if (hit.collider.tag == "petri")
                     {
-                        Instantiate(obstacles[Random.Range(0,obstacles.Length)], hit.point, hit.transform.rotation);
+                        GameObject obstacle = (GameObject)Instantiate(obstacles[Random.Range(0,obstacles.Length)], hit.point, hit.transform.rotation);
+                        Place(obstacle);
                     }
                 }
             }
+        }
+    }
+
+    void Place(GameObject obstacle)
+    {
+        totalPlaced.Add(obstacle);
+        if(totalPlaced.Count > maxObstacles)
+        {
+            Object.Destroy(totalPlaced[0].gameObject);
+            totalPlaced.RemoveAt(0);
         }
     }
 }
