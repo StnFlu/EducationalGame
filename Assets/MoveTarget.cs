@@ -25,8 +25,10 @@ public class MoveTarget : MonoBehaviour
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 if (Physics.Raycast(ray, out hit))
                 {
-
-                    target.position = hit.point;
+                    if (hit.collider.tag == "petri")
+                    {
+                        target.position = hit.point;
+                    }
                 }
             }
         }  

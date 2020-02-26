@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public int CurrentPlayer;
+    public GameObject CurrentPlayer;
+    public int CurrentPlayerNum;
     public List<Transform> Food;
     public List<GameObject> Organisms;
     public GameObject organisms;
@@ -18,8 +19,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         spawnOrganisms();
-        CurrentPlayer = selectPlayer();
-        Instantiate(sprite, Organisms[CurrentPlayer].transform.position, Organisms[CurrentPlayer].transform.rotation, Organisms[CurrentPlayer].transform);
+        CurrentPlayerNum = selectPlayer();
+        CurrentPlayer = Organisms[CurrentPlayerNum].gameObject;
         Time.timeScale = 1f;
         spawnFood(10, food);
     }

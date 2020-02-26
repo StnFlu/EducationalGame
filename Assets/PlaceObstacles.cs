@@ -6,7 +6,7 @@ public class PlaceObstacles : MonoBehaviour
 {
     Controller ct;
     [SerializeField]
-    private int maxObstacles;
+    private int maxObstacles = 5;
 
     public GameObject[] obstacles;
     private List<GameObject> totalPlaced = new List<GameObject>();

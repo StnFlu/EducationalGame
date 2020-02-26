@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class OrganismBrain : MonoBehaviour
 {
+    private bool CurPlayer;
+
     public NavMeshAgent player;
 
     public int age;
@@ -29,14 +31,14 @@ public class OrganismBrain : MonoBehaviour
 
     public Color start;
     public Color end;
+    public Color start1;
+    public Color end1;
     public bool hungry;
     public bool eating;
 
     void Start()
     {
         player.Warp(transform.position);
-
-
         target = GameObject.Find("Target").transform;
         gm = FindObjectOfType<GameManager>();
         //set movespeed to rand range
@@ -44,6 +46,12 @@ public class OrganismBrain : MonoBehaviour
         age = Random.Range(0, 12);
         defaultMovement = true;
         player.speed = movespeed;
+
+
+        if(gm.CurrentPlayer == gameObject)
+        {
+            CurPlayer = true;
+        }
     }
    
     public void move(Vector3 pos)
@@ -78,8 +86,15 @@ public class OrganismBrain : MonoBehaviour
         //lose health when starving
         loseHealth();
         //changecolour based on health
-        transform.GetComponentInChildren<Renderer>().material.color = Color.Lerp(start,end,(float)health/100);
-        //find nearest food
+        if (!CurPlayer)
+        {
+            transform.GetComponentInChildren<Renderer>().material.color = Color.Lerp(start, end, (float)health / 100);
+        }
+        else
+        {
+            transform.GetComponentInChildren<Renderer>().material.color = Color.Lerp(start1, end1, (float)health / 100);
+        }
+            //find nearest food
         food = findNearestFood();
 
 

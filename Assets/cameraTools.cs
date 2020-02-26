@@ -7,16 +7,21 @@ public class cameraTools : MonoBehaviour
     public Camera cam;
     public Vector3 offset;
     GameManager gm;
+    public GameObject player;
+
     // Start is called before the first frame update
     void Start()
     {
-        gm = FindObjectOfType<GameManager>();
+        gm = FindObjectOfType<GameManager>();      
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        cam.transform.position = gm.Organisms[gm.CurrentPlayer].transform.position + offset;
 
+    void LateUpdate()
+    {
+
+        player = gm.CurrentPlayer;
+
+        cam.transform.LookAt(player.transform);
+        cam.transform.position = player.transform.position + offset;
     }
 }
