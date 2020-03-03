@@ -2,28 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class food : MonoBehaviour
+public class Food : MonoBehaviour
 {
-    private GameManager gm;
-    public float foodAmount;
+    private FContainer foodContainer;
+    private float size;
 
 
-    // Start is called before the first frame update
+    //Finds the conatiner and assigns a random value for the food size.
     void Start()
     {
-        gm = FindObjectOfType<GameManager>();
-        gm.addFood(gameObject);
-        foodAmount = Random.Range(25, 100);
+        foodContainer = FindObjectOfType<FContainer>();
+        size = Random.Range(25, 100);
     }
 
-    // Update is called once per frame
+    //Checks whever the object needs to be destroyed every frame.
     void Update()
     {
-        if (foodAmount <= 0)
+        if (size <= 0)
         {
-            gm.removeFood(gameObject);
+            foodContainer.RemoveFood(gameObject);
             Destroy(gameObject);
-            
         }
     }
  

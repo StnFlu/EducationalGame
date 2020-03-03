@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public List<Transform> Food;
+    private FContainer foodContainer;
+    private List<Transform> Food;
 
-    // Start is called before the first frame update
     void Start()
     {
         Time.timeScale = 1f;
+        foodContainer = FindObjectOfType<FContainer>();
+        foodContainer.SpawnFood(); 
     }
 
-    // Update is called once per frame
+    // Adjusts the speed of the game depending on the coresponding key press.
     void Update()
     {
         if (Input.GetKey(KeyCode.O))
@@ -20,16 +22,10 @@ public class GameManager : MonoBehaviour
         if (Input.GetKey(KeyCode.P))
             Time.timeScale = 1f;
     }
-    public void addFood(GameObject x)
+
+    //Alters the speed of the game according to the passed in value.
+    public void SetTimeScale(float newTimeScale)
     {
-        Food.Add(x.transform);
-    }
-    public void removeFood(GameObject x)
-    {
-        Food.Remove(x.transform);
-    }
-    public void setTimeScale(float newtimeScale)
-    {
-        Time.timeScale = newtimeScale;
+        Time.timeScale = newTimeScale;
     }
 }
