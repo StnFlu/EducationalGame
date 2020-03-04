@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class MoveTarget : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    //Casts a ray to location of the mouse and then moves the target to that position
     void Update()
     {
         if (Input.GetKey(KeyCode.Mouse0))
@@ -19,10 +13,9 @@ public class MoveTarget : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (Physics.Raycast(ray, out hit))
             {
-
                 transform.position = hit.point;
             }
         }
     }
-
 }
+

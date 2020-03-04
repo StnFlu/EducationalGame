@@ -9,23 +9,39 @@ public class Creature : MonoBehaviour
     private int hunger;
     private int seconds;
 
+<<<<<<< Updated upstream
     private bool hungry;
 
     private FContainer foodContainer;
     private Movement movement;
 
     private transform foodLocation;
+=======
+    private bool eating;
+    private bool hungry;
+
+    private FoodContainer foodContainer;
+    private Movement movement;
+
+    private Transform foodLocation;
+>>>>>>> Stashed changes
 
     //Assigns other scripts to easier to call variables.
     void Start()
     {
+<<<<<<< Updated upstream
         foodContainer = FindObjectOfType<FContainer>();
         movement = GetComponentInParent<Movement>();
+=======
+        foodContainer = GameObject.FindWithTag("FoodContainer").GetComponent<FoodContainer>();
+        movement = gameObject.GetComponent<Movement>();
+>>>>>>> Stashed changes
     }
 
     void Update()
     {
         seconds += (int)Time.deltaTime; //Increments the number of seconds passed every frame.
+<<<<<<< Updated upstream
         ReduceHunger();
         IsHungry();
         LoseHealth();
@@ -35,6 +51,20 @@ public class Creature : MonoBehaviour
     }
 
 
+=======
+        IsHungry();
+        LoseHealth();
+        IncreaseAge();
+        if (!eating)
+        {
+            ReduceHunger();
+            if (hungry)
+                GetFood();
+        }
+        IsDead();
+    }
+
+>>>>>>> Stashed changes
     //Becomes hungry when the hunger value is below 60.
     void IsHungry()
     {
@@ -73,6 +103,7 @@ public class Creature : MonoBehaviour
     //There will be a reproduction function that creates an new creature when certain requirements are met. This may be part of a different class.
 
     //Calls a function in the food container when hungry that determines the nearest food source.
+<<<<<<< Updated upstream
     void LookForFood()
     {
         if (hungry)
@@ -86,4 +117,35 @@ public class Creature : MonoBehaviour
     }
 
     //There will be collision detection here for other food as well as other creatures.
+=======
+    //Calls a function from the movement scipt  to move towards a specified transform, in this case the location fo the nearest food. This will be adjusted to be more maluable and will only function when the creature is unoccupied with eating, sleeping or reproducing but will take priority over following the target.
+    void GetFood()
+    {
+        foodLocation = foodContainer.CalculateNearestFood(gameObject.transform);
+        movement.BasicMove(foodLocation);
+    }
+
+    void IsDead()
+    {
+        if (age >= 12 || health <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.transform.tag == "Food" && hungry)
+        {
+            eating = true;
+            hunger++;
+            collision.gameObject.GetComponent<Food>().ReduceFood();
+        }
+    }
+
+    //There will be collision detection here for other creatures.
+>>>>>>> Stashed changes
 }

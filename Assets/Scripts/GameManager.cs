@@ -4,14 +4,23 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+<<<<<<< Updated upstream
     private FContainer foodContainer;
     private List<Transform> Food;
+=======
+    private FoodContainer foodContainer;
+>>>>>>> Stashed changes
 
     void Start()
     {
         Time.timeScale = 1f;
+<<<<<<< Updated upstream
         foodContainer = FindObjectOfType<FContainer>();
         foodContainer.SpawnFood(); 
+=======
+        foodContainer = GameObject.FindWithTag("FoodContainer").GetComponent<FoodContainer>();
+        foodContainer.SpawnFood();
+>>>>>>> Stashed changes
     }
 
     // Adjusts the speed of the game depending on the coresponding key press.

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Food : MonoBehaviour
 {
+<<<<<<< Updated upstream
     private FContainer foodContainer;
     private float size;
 
@@ -12,6 +13,16 @@ public class Food : MonoBehaviour
     void Start()
     {
         foodContainer = FindObjectOfType<FContainer>();
+=======
+    private FoodContainer foodContainer;
+    private float size;
+
+    //Finds the container and assigns a random value for the food size.
+    void Start()
+    {
+        foodContainer = GameObject.FindWithTag("FoodContainer").GetComponent<FoodContainer>();
+        foodContainer.AddFood(gameObject);
+>>>>>>> Stashed changes
         size = Random.Range(25, 100);
     }
 
@@ -24,5 +35,9 @@ public class Food : MonoBehaviour
             Destroy(gameObject);
         }
     }
- 
+
+    public void ReduceFood()
+    {
+        size--;
+    }
 }
