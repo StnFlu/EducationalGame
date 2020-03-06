@@ -13,6 +13,7 @@ public class OrganismBrain : MonoBehaviour
 
     public int health;
     public int hunger;
+    public bool horny = true;
 
     public Transform target;
     public Rigidbody rb;
@@ -35,6 +36,8 @@ public class OrganismBrain : MonoBehaviour
     public Color end1;
     public bool hungry;
     public bool eating;
+
+    public List<GameObject> breds;
 
     void Start()
     {
@@ -60,6 +63,7 @@ public class OrganismBrain : MonoBehaviour
     }
     private void Update()
     {
+  
         //statmanagement
         clock += Time.deltaTime;
         seconds = (int)clock;
@@ -103,18 +107,24 @@ public class OrganismBrain : MonoBehaviour
 
     void FixedUpdate()
     {
+        
         if (!hungry)
         {
+            transform.LookAt(target);
             move(target.position);
         }
         else
         {
             if (food != null)
             {
+                transform.LookAt(food);
                 move(food.position);
             }
             else
+            {
+                transform.LookAt(target);
                 move(target.position);
+            }
         }
     }
     public Transform findNearestFood()
@@ -202,5 +212,21 @@ public class OrganismBrain : MonoBehaviour
             hunger ++;
             collision.gameObject.GetComponentInParent<food>().foodAmount--;
         }
+
+    }
+    void OnTriggerEnter(Collider other)
+    {
+
+        if (horny)
+        {
+            breds.Add(other.gameObject);
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+
+    
+            breds.Remove(other.gameObject);
+        
     }
 }

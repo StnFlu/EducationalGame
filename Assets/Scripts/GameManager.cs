@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
         int number = Random.Range(10, 25);
         for (int i = 0 ; i < number; i++)
         {
-            GameObject creatures = (GameObject)Instantiate(organisms, new Vector3(2, 0, 2), transform.rotation, GameObject.Find("Organisms").transform);
+            GameObject creatures = (GameObject)Instantiate(organisms, new Vector3(2, 1, 2), transform.rotation, GameObject.Find("Organisms").transform);
             Organisms.Add(creatures);
         }
     }
