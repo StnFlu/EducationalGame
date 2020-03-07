@@ -2,17 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Excretion : MonoBehaviour
+public class Excretion : OrganismBrain
 {
-    // Start is called before the first frame update
-    void Start()
+    public void des()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        gm.inst(gameObject, gameObject.transform);
     }
 }

@@ -5,6 +5,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public List<Transform> Food;
+    public GameObject food;
+    public GameObject organism;
 
     // Start is called before the first frame update
     void Start()
@@ -31,5 +33,9 @@ public class GameManager : MonoBehaviour
     public void setTimeScale(float newtimeScale)
     {
         Time.timeScale = newtimeScale;
+    }
+    public void inst(GameObject x, Transform T)
+    {
+        Instantiate(x, T);
     }
 }
