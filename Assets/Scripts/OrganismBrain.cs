@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class OrganismBrain : MonoBehaviour
 {
-    public int age;
+    protected int age;
 
-    public int health;
-    public int hunger;
+    protected int health;
+    protected int hunger;
 
     public Transform target;
     public Rigidbody rb;
-    private GameManager gm;
+    protected GameManager gm;
     public Transform food;
+    protected Transform org;
 
-    bool hungerTick;
-    bool healthTick;
-    bool ageTick;
+    protected bool hungerTick;
+    protected bool healthTick;
+    protected bool ageTick;
 
     float clock = 0;
     public int seconds;
@@ -29,11 +30,17 @@ public class OrganismBrain : MonoBehaviour
     public bool hungry;
     public bool eating;
 
+    protected Movement m = new Movement();
+    protected Sensitivity s = new Sensitivity();
+    protected Growth g = new Growth();
+    protected Nutrition n = new Nutrition();
+
+
     void Start()
     {
         gm = FindObjectOfType<GameManager>();
-        //set movespeed to rand range
-        movespeed = Random.Range(0.4f, 0.9f);
+        org = gameObject.transform;
+        movespeed = 4f;
         age = Random.Range(0, 25);
     }
 
@@ -44,10 +51,10 @@ public class OrganismBrain : MonoBehaviour
         seconds = (int)clock;
 
         //age
-        aging();
+        g.aging();
 
         //hungryManagment
-        gethungry();
+        n.gethungry();
         if (hunger <= 80 || eating)
         {
             hungry = true;
@@ -63,106 +70,50 @@ public class OrganismBrain : MonoBehaviour
             eating = false;
         }
         //lose health when starving
-        loseHealth();
+        g.loseHealth();
         //changecolour based on health
         transform.GetComponentInChildren<Renderer>().material.color = Color.Lerp(start,end,(float)health/100);
         //find nearest food
-        food = findNearestFood();
+        food = s.findNearestFood();
 
 
     }
     // Update is called once per frame
     void FixedUpdate()
     {
-        //aging
-        
-       // health -= Time.deltaTime / 2;
-        //transform.localScale = new Vector3(health / 100, health / 100, health / 100);
-
-
-        //movement
         if (!hungry)
         {
-            move(target);
+            m.move(target);
         }
         else
         {
             if (food != null)
             {
-                move(food);
+                m.move(food);
             }
             if (food == null)
             {
-                move(target);
+                m.move(target);
             }
         }
+        g.scale();
     }
-    void move(Transform targetPos)
-    {
-        transform.LookAt(targetPos);
-        rb.velocity = rb.transform.forward * movespeed;
-    }
-    public Transform findNearestFood()
-    {
-        Transform foodClosest = null;
-        float closestFood = Mathf.Infinity;
-        foreach (Transform foodItem in gm.Food)
-        {
-
-            float distance = Vector3.Distance(transform.position, foodItem.transform.position);
-            if(distance < closestFood)
-            {
-                foodClosest = foodItem;
-                closestFood = distance;
-            }
-        }
-        return foodClosest;
-    }
+   
     public int increment(int current, int difference)
     { 
         return current += difference;
     }
-    void aging()
+    public float increment(float current, float difference)
     {
-        if (seconds % 12 == 0)
-        {
-            if (!ageTick)
-                age = increment(age, 1);
-            ageTick = true;
-        }
-        else
-            ageTick = false;
+        return current += difference;
     }
-    void gethungry()
-    {
-        if (seconds % 4 == 0)
-        {
-            if (!hungerTick)
-                hunger = increment(hunger, -1);
-            hungerTick = true;
-        }
-        else
-            hungerTick = false;
-    }
-    void loseHealth()
-    {
-       
-        if (seconds % 4 == 0)
-        {
-            if (!healthTick)
-                health = increment(health, -1);
-            healthTick = true;
-        }
-        else
-            healthTick = false;
-    }
-   
+
     private void OnCollisionStay(Collision collision)
     {
-        if(collision.transform.tag == "food" && hungry)
+        if (collision.transform.tag == "food" && hungry)
         {
             eating = true;
-            hunger ++;
+            hunger++;
             collision.gameObject.GetComponentInParent<food>().foodAmount--;
         }
     }
