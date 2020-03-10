@@ -6,7 +6,13 @@ public class MoveCamera : MonoBehaviour
 {
     public Camera cam;
     public float speed = 10.0f;
+    float rotX;
+    float rotY;
+    float RotSpeed = 2;
+    float UpDown;
+    float LeftRight;
     public float rotationSpeed = 100.0f;
+    public Transform target;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +22,7 @@ public class MoveCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
         if (Input.GetKey(KeyCode.LeftShift))
         {
             Zoom(.4f);
@@ -26,13 +33,31 @@ public class MoveCamera : MonoBehaviour
         }
 
 
-        float UpDown = Input.GetAxis("Vertical") * speed;
-        float LeftRight = Input.GetAxis("Horizontal") * speed;
+
+
+        rotX += Input.GetAxis("Mouse X") * RotSpeed;
+        rotY += Input.GetAxis("Mouse Y") * RotSpeed;
+        rotY = Mathf.Clamp(rotY, -130f, -30f);
+
+        if (Input.GetKey(KeyCode.Mouse2))
+        {
+            cam.transform.rotation = Quaternion.Euler(-rotY, rotX, 0f);
+        }
+        //Camera rotation only allowed if game us not paused
+
+
+
+        UpDown += Input.GetAxis("Vertical") * speed;
+       LeftRight += Input.GetAxis("Horizontal") * speed;
         UpDown *= Time.deltaTime;
         LeftRight *= Time.deltaTime;
+        
 
         // Move translation along the object's z-axis
+        cam.transform.LookAt(target);
         cam.transform.Translate(LeftRight, UpDown, 0);
+
+       
 
 
 

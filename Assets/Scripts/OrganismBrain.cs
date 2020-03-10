@@ -11,6 +11,8 @@ public class OrganismBrain : MonoBehaviour
 
     public int age;
 
+    public bool Gender;
+
     public int health;
     public int hunger;
     public bool horny = true;
@@ -18,6 +20,8 @@ public class OrganismBrain : MonoBehaviour
     public Transform target;
     public Rigidbody rb;
     private GameManager gm;
+    public GameObject Poop;
+    public GameObject Child;
     public Transform food;
 
     bool hungerTick;
@@ -36,8 +40,9 @@ public class OrganismBrain : MonoBehaviour
     public Color end1;
     public bool hungry;
     public bool eating;
-
+    bool pooTime = true;
     public List<GameObject> breds;
+    bool PoppTick = false;
 
     void Start()
     {
@@ -50,8 +55,9 @@ public class OrganismBrain : MonoBehaviour
         defaultMovement = true;
         player.speed = movespeed;
 
+        Gender = (Random.value > 0.5f);
 
-        if(gm.CurrentPlayer == gameObject)
+        if (gm.CurrentPlayer == gameObject)
         {
             CurPlayer = true;
         }
@@ -73,6 +79,12 @@ public class OrganismBrain : MonoBehaviour
 
         //hungryManagment
         gethungry();
+
+        //PooTime
+        Excrete();
+
+        //Breed
+        Reproduce();
         if (hunger <= 80 || eating)
         {
             hungry = true;
@@ -100,6 +112,18 @@ public class OrganismBrain : MonoBehaviour
         }
             //find nearest food
         food = findNearestFood();
+
+        if(hunger >30 &&seconds % 6 == 0 && pooTime)
+        {
+            Excrete();
+        }
+        else if (seconds % 6 == 0 && !pooTime)
+        {
+            if(!(seconds % 6 == 0))
+            {
+                pooTime = true;
+            }
+        }
 
 
     }
@@ -146,6 +170,19 @@ public class OrganismBrain : MonoBehaviour
     public int increment(int current, int difference)
     { 
         return current += difference;
+    }
+    void Reproduce()
+    {
+        if(horny&& breds.Count>1)
+        {
+            int giveBirth = Random.Range(0, 10);
+            if (giveBirth > 8)
+            {
+                horny = false;
+                Instantiate(Child, transform.position, transform.rotation);
+                
+            }
+        }
     }
     void aging()
     {
@@ -204,6 +241,29 @@ public class OrganismBrain : MonoBehaviour
         Debug.Log("test");
     }
 
+    public void Excrete()
+    {
+        
+
+       
+        if (seconds % 12 == 0 )
+        {
+            if (!PoppTick)
+            {
+                int poop = Random.Range(0, 100);
+                if (poop > 90)
+                {
+                    Instantiate(Poop, transform.position, transform.rotation);
+                }
+            }
+            PoppTick = true;
+        }
+        else
+            PoppTick = false;
+
+
+    }
+
     private void OnCollisionStay(Collision collision)
     {
         if(collision.transform.tag == "food" && hungry)
@@ -214,10 +274,10 @@ public class OrganismBrain : MonoBehaviour
         }
 
     }
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
 
-        if (horny)
+        if (horny && other.tag == "Player")
         {
             breds.Add(other.gameObject);
         }
