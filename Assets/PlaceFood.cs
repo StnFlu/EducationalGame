@@ -18,7 +18,7 @@ public class PlaceFood : MonoBehaviour
         
         if (ct.CurrentTool == gameObject.GetComponent<PlaceFood>())
         {
-            Debug.Log("test Food");
+
             if (Input.GetKey(KeyCode.Mouse0))
             {
                 RaycastHit hit;

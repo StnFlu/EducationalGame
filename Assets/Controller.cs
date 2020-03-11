@@ -18,7 +18,7 @@ public class Controller : MonoBehaviour
     void Update()
     {
         
-        Debug.Log(CurrentTool);
+
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
             if (!(ToolNumber >= Tools.Length-1))

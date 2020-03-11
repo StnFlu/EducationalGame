@@ -13,6 +13,11 @@ public class MoveCamera : MonoBehaviour
     float LeftRight;
     public float rotationSpeed = 100.0f;
     public Transform target;
+
+    public GameObject campos;
+
+    int index = 0;
+    public Vector3[] zoomLevel;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,13 +28,23 @@ public class MoveCamera : MonoBehaviour
     void Update()
     {
 
-        if (Input.GetKey(KeyCode.LeftShift))
+        campos.transform.position = zoomLevel[index];
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            Zoom(.4f);
+            index++;
         }
-        if (Input.GetKey(KeyCode.LeftControl))
+        if (Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Zoom(-0.4f);
+            index--;
+        }
+        if(index > 2)
+        {
+            index = 2;
+        }
+        if(index < 0)
+        {
+            index = 0;
         }
 
 
@@ -47,16 +62,16 @@ public class MoveCamera : MonoBehaviour
 
 
 
-        UpDown += Input.GetAxis("Vertical") * speed;
-       LeftRight += Input.GetAxis("Horizontal") * speed;
+        UpDown += Input.GetAxis("Vertical") * speed * (index+1)/2;
+       LeftRight += Input.GetAxis("Horizontal") * speed * (index+1)/2;
         UpDown *= Time.deltaTime;
         LeftRight *= Time.deltaTime;
         
 
         // Move translation along the object's z-axis
-        cam.transform.LookAt(target);
+        //cam.transform.LookAt(target);
         cam.transform.Translate(LeftRight, UpDown, 0);
-
+   
        
 
 
