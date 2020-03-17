@@ -6,6 +6,8 @@ TagManager:
   tags:
   - food
   - petri
+  - zoomAble
+  - wall
   layers:
   - Default
   - TransparentFX
