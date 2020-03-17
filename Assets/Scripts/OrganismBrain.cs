@@ -202,7 +202,7 @@ public class OrganismBrain : MonoBehaviour
     {
         if(age< 18)
         {
-            transform.localScale = transform.localScale * 1.1f;
+            transform.localScale = transform.localScale * 1.025f;
         }
         else if(age > 18 && age < 30)
         {
@@ -210,7 +210,7 @@ public class OrganismBrain : MonoBehaviour
         }
         else
         {
-            transform.localScale = transform.localScale * 0.95f;
+            transform.localScale = transform.localScale * 0.9975f;
         }
     }
     void gethungry()

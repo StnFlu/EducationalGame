@@ -6,6 +6,7 @@ public class MoveTarget : MonoBehaviour
 {
     Controller ct;
     public Transform target;
+    public Vector3 offset;
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +28,7 @@ public class MoveTarget : MonoBehaviour
                 {
                     if (hit.collider.tag == "petri")
                     {
-                        target.position = hit.point;
+                        target.position = hit.point + offset;
                     }
                 }
             }
