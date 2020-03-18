@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -82,5 +84,13 @@ public class GameManager : MonoBehaviour
         int player = Random.Range(0, Organisms.Count);
         return player;
             
+    }
+    public void quitGame()
+    {
+        Application.Quit();
+    }
+    public void restartGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);;
     }
 }

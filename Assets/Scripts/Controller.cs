@@ -21,14 +21,21 @@ public class Controller : MonoBehaviour
 
             if (Input.GetAxis("Mouse ScrollWheel") > 0)
             {
-            if (!(ToolNumber >= Tools.Length-1))
+         
                 ToolNumber++;
+            if(ToolNumber > Tools.Length-1)
+            {
+                ToolNumber = 0;
+            }
             }
             if (Input.GetAxis("Mouse ScrollWheel") < 0)
             {
-            if (!(ToolNumber <= 0))
                 ToolNumber--;
+            if (ToolNumber < 0)
+            {
+                ToolNumber = 2;
             }
+        }
 
         CurrentTool = Tools[ToolNumber];
     }
