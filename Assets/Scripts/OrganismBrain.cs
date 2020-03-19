@@ -7,10 +7,10 @@ public class OrganismBrain : MonoBehaviour
 {
     private bool CurPlayer;
 
+    public ParticleSystem particleBurst;
+
     public NavMeshAgent player;
-
     public int age;
-
     public bool Gender;
 
     public int health;
@@ -30,6 +30,8 @@ public class OrganismBrain : MonoBehaviour
     public bool defaultMovement = true;
     float clock = 0;
     public int seconds;
+
+    public float eatInterval;
 
     //modifiers
     public float movespeed;
@@ -85,22 +87,31 @@ public class OrganismBrain : MonoBehaviour
 
         //Breed
         Reproduce();
-        if (hunger <= 80 || eating)
+        if (hunger <= 60 || eating)
         {
             hungry = true;
+            loseHealth();
         }
         else
         {
             food = null;
             hungry = false;
         }
+        if (hunger > 85)
+        {
+            eating = false;
+        }
         if (hunger > 100)
         {
             hunger = 100;
-            eating = false;
         }
-        //lose health when starving
-        loseHealth();
+
+        if(health < 1)
+        {
+            Destroy(gameObject);
+        }
+
+
         //changecolour based on health
         if (!CurPlayer)
         {
@@ -113,7 +124,7 @@ public class OrganismBrain : MonoBehaviour
             //find nearest food
         food = findNearestFood();
 
-        if(hunger >30 &&seconds % 6 == 0 && pooTime)
+        if(hunger >30 &&seconds % 6 == 0 && pooTime && !hungry)
         {
             Excrete();
         }
@@ -131,7 +142,6 @@ public class OrganismBrain : MonoBehaviour
 
     void FixedUpdate()
     {
-        
         if (!hungry)
         {
             transform.LookAt(target);
@@ -143,6 +153,7 @@ public class OrganismBrain : MonoBehaviour
             {
                 transform.LookAt(food);
                 move(food.position);
+                Eat();
             }
             else
             {
@@ -236,22 +247,16 @@ public class OrganismBrain : MonoBehaviour
         else
             healthTick = false;
     }
-    public void AddDamage()
-    {
-        Debug.Log("test");
-    }
+
 
     public void Excrete()
     {
-        
-
-       
         if (seconds % 12 == 0 )
         {
             if (!PoppTick)
             {
                 int poop = Random.Range(0, 100);
-                if (poop > 90)
+                if (poop > 98)
                 {
                     Instantiate(Poop, transform.position, transform.rotation);
                 }
@@ -260,20 +265,32 @@ public class OrganismBrain : MonoBehaviour
         }
         else
             PoppTick = false;
-
-
     }
 
-    private void OnCollisionStay(Collision collision)
+    public void Eat()
     {
-        if(collision.transform.tag == "food" && hungry)
+        eatInterval += Time.deltaTime;
+        Debug.DrawRay(transform.position, transform.forward);
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,transform.forward, out hit,.2f))
         {
-            eating = true;
-            hunger ++;
-            collision.gameObject.GetComponentInParent<food>().foodAmount--;
-        }
+            if(hit.collider.tag == "food")
+            {
+                eating = true;
+                if (eatInterval > 1)
+                {
+                    hunger += 2;
+                    hit.collider.gameObject.GetComponent<food>().foodAmount -= 2;
+                    Instantiate(particleBurst, hit.point, transform.rotation);
 
+                    eatInterval = 0;
+                }
+            }
+        }
     }
+
+
+   
     void OnTriggerStay(Collider other)
     {
 

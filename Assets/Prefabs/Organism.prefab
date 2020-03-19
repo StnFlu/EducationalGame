@@ -25,7 +25,6 @@ GameObject:
   - component: {fileID: 7746986725323108044}
   - component: {fileID: 7746986725323108045}
   - component: {fileID: 116476121949699395}
-  - component: {fileID: 6940195986886378447}
   - component: {fileID: 7746986725323108043}
   m_Layer: 9
   m_Name: Organism
@@ -61,6 +60,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e383868fbe8d264fa14278e0be183a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  particleBurst: {fileID: 2410769930882773039, guid: e2769139d1e52594c80f61569bf841cd,
+    type: 3}
   player: {fileID: 116476121949699395}
   age: 0
   Gender: 0
@@ -74,6 +75,7 @@ MonoBehaviour:
   food: {fileID: 0}
   defaultMovement: 1
   seconds: 0
+  eatInterval: 0
   movespeed: 1
   start: {r: 0.8509928, g: 1, b: 0, a: 1}
   end: {r: 0, g: 0, b: 0, a: 1}
@@ -120,19 +122,6 @@ NavMeshAgent:
   m_BaseOffset: 0.05
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &6940195986886378447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7746986725323108047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 663a9224d9f91ea489a2bbb2745a1480, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  child: {fileID: 7746986725323108047}
 --- !u!135 &7746986725323108043
 SphereCollider:
   m_ObjectHideFlags: 0

@@ -4,18 +4,33 @@ using UnityEngine;
 
 public class lookAtMouse : MonoBehaviour
 {
-    public float sensitivity = 0.05f;
+    public float mouseSensitivity = 100.0f;
+    public float clampAngle = 80.0f;
+    public float clampAngleY = 80.0f;
 
+    private float rotY = 0.0f; // rotation around the up/y axis
+    private float rotX = 0.0f; // rotation around the right/x axis
 
-    // Update is called once per frame
+    void Start()
+    {
+        Vector3 rot = transform.localRotation.eulerAngles;
+        rotY = rot.y;
+        rotX = rot.x;
+    }
+
     void Update()
     {
-        Camera mycam = GetComponent<Camera>();
+        float mouseX = Input.GetAxis("Mouse X");
+        float mouseY = -Input.GetAxis("Mouse Y");
 
-        float mouseX = (Input.mousePosition.x / Screen.width) - 0.5f;
+        rotY += mouseX * mouseSensitivity * Time.deltaTime;
+        rotX += mouseY * mouseSensitivity * Time.deltaTime;
 
-        float mouseY = (Input.mousePosition.y / Screen.height) - 0.5f;
-        mycam.transform.localRotation = Quaternion.Euler(new Vector4(-1f * (mouseY * 180f), mouseX * 360f, transform.localRotation.z));
+        rotX = Mathf.Clamp(rotX, -clampAngle, clampAngle);
 
+        rotY = Mathf.Clamp(rotY, -clampAngleY, clampAngleY);
+
+        Quaternion localRotation = Quaternion.Euler(rotX, rotY, 0.0f);
+        transform.rotation = localRotation;
     }
 }

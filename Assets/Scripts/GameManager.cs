@@ -30,7 +30,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
     }
     public void addFood(GameObject x)
@@ -68,7 +67,7 @@ public class GameManager : MonoBehaviour
         Vector3 center = transform.position;
         for (int i = 0; i < numObjects/2; i++)
         {
-            Vector3 pos = RandomCircle(center, 9.0f);
+            Vector3 pos = RandomCircle(center, 3.0f);
             Quaternion rot = Quaternion.FromToRotation(Vector3.forward, center - pos);
             Instantiate(prefab, pos, rot);
         }
@@ -91,6 +90,6 @@ public class GameManager : MonoBehaviour
     }
     public void restartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }
