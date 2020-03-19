@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject organisms;
     public GameObject food;
     public GameObject sprite;
+    public GameObject GameOver;
     public Texture2D cursorTexture;
     public CursorMode cursorMode = CursorMode.Auto;
     public Vector2 hotSpot = Vector2.zero;
@@ -31,6 +32,10 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         Cursor.SetCursor(cursorTexture, hotSpot, cursorMode);
+        if(CurrentPlayer == null)
+        {
+            GameOver.SetActive(true);
+        }
     }
     public void addFood(GameObject x)
     {
@@ -82,7 +87,6 @@ public class GameManager : MonoBehaviour
     {
         int player = Random.Range(0, Organisms.Count);
         return player;
-            
     }
     public void quitGame()
     {

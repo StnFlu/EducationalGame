@@ -18,7 +18,7 @@ public class CurPlayer : MonoBehaviour
     {
         if (GameManager.CurrentPlayer == null)
         {
-            Debug.Log("GameOver");
+            Destroy(gameObject);
         }
         else
         transform.position = GameManager.CurrentPlayer.transform.position + offset;

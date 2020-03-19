@@ -73,13 +73,16 @@ MonoBehaviour:
   Poop: {fileID: 5859407210489928475, guid: a009d93680262264bb6d05aa7ea6392c, type: 3}
   Child: {fileID: 7746986725323108047}
   food: {fileID: 0}
+  playerHere: {fileID: 6950129213404752857, guid: 08d9df563d1b3c84d9c6a9c4f1cce69c,
+    type: 3}
+  offset: {x: 0, y: 0, z: 2}
   defaultMovement: 1
   seconds: 0
   eatInterval: 0
   movespeed: 1
-  start: {r: 0.8509928, g: 1, b: 0, a: 1}
+  start: {r: 1, g: 1, b: 1, a: 1}
   end: {r: 0, g: 0, b: 0, a: 1}
-  start1: {r: 1, g: 1, b: 1, a: 1}
+  start1: {r: 0.97475713, g: 1, b: 0.3726415, a: 1}
   end1: {r: 1, g: 0, b: 0, a: 1}
   hungry: 0
   eating: 0

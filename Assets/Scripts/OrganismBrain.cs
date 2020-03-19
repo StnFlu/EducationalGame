@@ -23,6 +23,9 @@ public class OrganismBrain : MonoBehaviour
     public GameObject Poop;
     public GameObject Child;
     public Transform food;
+    public GameObject playerHere;
+
+    public Vector3 offset;
 
     bool hungerTick;
     bool healthTick;
@@ -54,6 +57,7 @@ public class OrganismBrain : MonoBehaviour
         //set movespeed to rand range
         movespeed = Random.Range(0.4f, 0.9f);
         age = Random.Range(0, 12);
+        hunger = Random.Range(80, 100);
         defaultMovement = true;
         player.speed = movespeed;
 
@@ -71,7 +75,7 @@ public class OrganismBrain : MonoBehaviour
     }
     private void Update()
     {
-  
+        playerHere.transform.position = transform.position + offset;
         //statmanagement
         clock += Time.deltaTime;
         seconds = (int)clock;
