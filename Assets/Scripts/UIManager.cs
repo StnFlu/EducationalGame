@@ -1,22 +1,29 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
+
 
 public class UIManager : MonoBehaviour
 {
-    void PauseGame()
+    public Canvas menu;
+
+    public void PauseGame()
     {
-        Time.timescale = 0f;
+        menu.gameObject.SetActive(true);
+        Time.timeScale = 0f;
     }
 
-    void UnPauseGame()
+    public void UnPauseGame()
     {
-        Time.timescale = 1f;
+        menu.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
 
-    void ExitGame()
+    public void ExitGame()
     {
-
+        Application.Quit();
     }
 
     void AdjustEffects()
@@ -29,18 +36,15 @@ public class UIManager : MonoBehaviour
 
     }
 
-    void Fullscreen()
+    public void Fullscreen()
     {
-
+        if (!Screen.fullScreen)
+            Screen.fullScreen = true;
     }
 
-    void Borderless()
+    public void Windowed()
     {
-
-    }
-
-    void Windowed()
-    {
-
+        if (Screen.fullScreen)
+            Screen.fullScreen = false;
     }
 }
